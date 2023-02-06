@@ -64,14 +64,18 @@ else
   git clone https://github.com/kordless/mitta-services.git
   cd /opt/mitta-services/weaviate/
 
+  cp docker-compose.yml /root/
+  cp start-weaviate.sh /root/
+
   apt-get install apache2-utils -y
   apt-get install nginx -y
   cp nginx.conf.weaviate /etc/nginx/nginx.conf
 
   # start weaviate
+  cd /root
   ./start-weaviate.sh
 
-  # grab the token and write to nginx
+  # grab the token and write to nginx htpasswrd
   python3 get_token.py weaviate
 
   # restart ngninx
@@ -100,7 +104,7 @@ $PREEMPTIBLE \
 sleep 15
 
 # add data
-gcloud compute instances add-metadata $NAME-$NEW_UUID --zone $ZONE --metadata-from-file=shutdown-script=stopslothbot.sh
+gcloud compute instances add-metadata $NAME-$NEW_UUID --zone $ZONE --metadata-from-file=shutdown-script=stop-weaviate.sh
 
 IP=$(gcloud compute instances describe $NAME-$NEW_UUID --zone $ZONE  | grep natIP | cut -d: -f2 | sed 's/^[ \t]*//;s/[ \t]*$//')
 
