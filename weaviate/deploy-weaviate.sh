@@ -31,10 +31,10 @@ esac
 if [ -f secrets.sh ]; then
    source secrets.sh # truly, a travesty, sets TOKEN=token-[passphrase]
    echo "Here's where I say, hold on a second while we fire things up."
-   gcloud compute project-info add-metadata --metadata token=$TOKEN
+   gcloud compute project-info add-metadata --metadata token=$TOKEN --metadata openai_token=$OPENAI_TOKEN
    echo;
 else
-   echo "Create 'secrets.sh', put a TOKEN=f00bar statement in it and then rerun this script."
+   echo "Create 'secrets.sh', put a TOKEN=f00bar and OPENAI_TOKEN=pk-xxx statements in it and then rerun this script."
    echo;
    exit;
 fi
@@ -70,6 +70,7 @@ else
 
   apt-get install apache2-utils -y
   apt-get install nginx -y
+  
   cp nginx.conf.weaviate /etc/nginx/nginx.conf
 
   # start weaviate
@@ -98,7 +99,7 @@ gcloud compute instances create $NAME-$NEW_UUID \
 --service-account mitta-us@appspot.gserviceaccount.com \
 --zone $ZONE \
 --labels type=weaviate \
---tags weaviate,token-$TOKEN \
+--tags weaviate,token_$TOKEN,openai_token_$OPENAI_TOKEN \
 $PREEMPTIBLE \
 --subnet=default $IP --network-tier=PREMIUM \
 --metadata startup-script="$SCRIPT"
