@@ -1,5 +1,7 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
 secrets.sh
-*/secrets.sh
-*/config.py
 config.py
 *.pyc
