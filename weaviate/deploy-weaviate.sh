@@ -31,8 +31,7 @@ esac
 if [ -f secrets.sh ]; then
    source secrets.sh # truly, a travesty, sets TOKEN=token-[passphrase]
    echo "Here's where I say, hold on a second while we fire things up."
-   gcloud compute project-info add-metadata --metadata token=$TOKEN 
-   gcloud compute project-info add-metadata --metadata sk=$SK
+   gcloud compute project-info add-metadata --metadata token=$TOKEN
    echo;
 else
    echo "Create 'secrets.sh', put a TOKEN=f00bar and SK=xxx statements in it and then rerun this script."

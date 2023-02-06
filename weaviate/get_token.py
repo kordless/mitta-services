@@ -9,8 +9,6 @@ evalcontent = eval(content)
 for item in evalcontent:
         if 'token' in item:
                 key,token = item.split('-')
-        if 'openai' in item:
-                key,openai_token = item.split('-')
 
 # set nginx password with http token
 import os, sys
@@ -21,7 +19,3 @@ os.system("/usr/bin/htpasswd -b -c /etc/nginx/htpasswd %s %s" % (user, token))
 f = open('bidntoken', 'w')
 f.write("TOKEN=%s\n" % token)
 f.close()
-
-f1 = open('config.sh', 'w')
-f1.write("OPENAI_APIKEY=%s-%s\n" % (key,openai_token))
-f1.close()
