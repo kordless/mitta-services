@@ -103,7 +103,7 @@ gcloud compute instances create $NAME-$NEW_UUID \
 --service-account mitta-us@appspot.gserviceaccount.com \
 --zone $ZONE \
 --labels type=weaviate \
---tags weaviate,token_$TOKEN,openai_token_$OPENAI_TOKEN \
+--tags weaviate,token-$TOKEN,openai-$OPENAI_TOKEN \
 $PREEMPTIBLE \
 --subnet=default $IP --network-tier=PREMIUM \
 --metadata startup-script="$SCRIPT"
