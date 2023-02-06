@@ -32,10 +32,10 @@ if [ -f secrets.sh ]; then
    source secrets.sh # truly, a travesty, sets TOKEN=token-[passphrase]
    echo "Here's where I say, hold on a second while we fire things up."
    gcloud compute project-info add-metadata --metadata token=$TOKEN 
-   gcloud compute project-info add-metadata --metadata openai=$OPENAI_TOKEN
+   gcloud compute project-info add-metadata --metadata sk=$SK
    echo;
 else
-   echo "Create 'secrets.sh', put a TOKEN=f00bar and OPENAI_TOKEN=pk-xxx statements in it and then rerun this script."
+   echo "Create 'secrets.sh', put a TOKEN=f00bar and SK=xxx statements in it and then rerun this script."
    echo;
    exit;
 fi
@@ -103,7 +103,7 @@ gcloud compute instances create $NAME-$NEW_UUID \
 --service-account mitta-us@appspot.gserviceaccount.com \
 --zone $ZONE \
 --labels type=weaviate \
---tags weaviate,token-$TOKEN,openai-$OPENAI_TOKEN \
+--tags weaviate,token-$TOKEN,sk-$OPENAI_TOKEN \
 $PREEMPTIBLE \
 --subnet=default $IP --network-tier=PREMIUM \
 --metadata startup-script="$SCRIPT"
