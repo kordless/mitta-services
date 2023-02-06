@@ -66,6 +66,7 @@ else
 
   cp docker-compose.yml /root/
   cp start-weaviate.sh /root/
+  cp get_token.py /root/
 
   apt-get install apache2-utils -y
   apt-get install nginx -y
