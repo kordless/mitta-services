@@ -57,13 +57,24 @@ else
   cat "RNGDEVICE=/dev/urandom" >> /etc/default/rng-tools
   /etc/init.d/rng-tools restart
 
+  # install docker
   snap install docker
+
+  cd /opt/
+  git clone https://github.com/kordless/mitta-services.git
+  cd /opt/mitta-services/weaviate/
 
   apt-get install apache2-utils -y
   apt-get install nginx -y
   cp nginx.conf.weaviate /etc/nginx/nginx.conf
 
+  # start weaviate
+  ./start-weaviate.sh
+
+  # grab the token and write to nginx
   python3 get_token.py weaviate
+
+  # restart ngninx
   systemctl restart nginx.service
 
   date >> /opt/done.time
