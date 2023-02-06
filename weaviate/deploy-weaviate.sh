@@ -31,7 +31,8 @@ esac
 if [ -f secrets.sh ]; then
    source secrets.sh # truly, a travesty, sets TOKEN=token-[passphrase]
    echo "Here's where I say, hold on a second while we fire things up."
-   gcloud compute project-info add-metadata --metadata token=$TOKEN --metadata openai_token=$OPENAI_TOKEN
+   gcloud compute project-info add-metadata --metadata token=$TOKEN 
+   gcloud compute project-info add-metadata --metadata openai=$OPENAI_TOKEN
    echo;
 else
    echo "Create 'secrets.sh', put a TOKEN=f00bar and OPENAI_TOKEN=pk-xxx statements in it and then rerun this script."
@@ -73,8 +74,11 @@ else
   
   cp nginx.conf.weaviate /etc/nginx/nginx.conf
 
-  # start weaviate
+  # grab the tokens and write to nginx htpasswrd and env
   cd /root
+  python3 get_token.py weaviate
+
+  # start weaviate
   ./start-weaviate.sh
 
   # grab the token and write to nginx htpasswrd

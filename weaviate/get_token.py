@@ -8,9 +8,9 @@ response, content = http.request(url, 'GET', headers=headers)
 evalcontent = eval(content)
 for item in evalcontent:
         if 'token' in item:
-                key,token = item.split('_')
-        if 'openai-token' in item:
-                key,openai_token = item.split('_')
+                key,token = item.split('-')
+        if 'openai' in item:
+                key,openai_token_1,openai_token_2 = item.split('-')
 
 # set nginx password with http token
 import os, sys
@@ -23,5 +23,5 @@ f.write("TOKEN=%s\n" % token)
 f.close()
 
 f1 = open('config.sh', 'w')
-f1.write("OPENAI_TOKEN=%s\n" % openai_token)
+f1.write("OPENAI_TOKEN=%s-%s\n" % (openai_token_1,openai_token_2))
 f1.close()
