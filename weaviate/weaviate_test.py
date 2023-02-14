@@ -10,4 +10,5 @@ client = weaviate.Client(
 
 
 all_objects = client.data_object.get(class_name="History")
+
 print(all_objects)
