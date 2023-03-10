@@ -19,11 +19,3 @@ os.system("/usr/bin/htpasswd -b -c /etc/nginx/htpasswd %s %s" % (user, token))
 f = open('bidntoken', 'w')
 f.write("TOKEN=%s\n" % token)
 f.close()
-
-import requests
-import json
-request = requests.get("https://mitta-dev.ngrok.io/tokens?token=%s" % (token))
-x = request.json()
-f1 = open('config.sh', 'w')
-f1.write("OPENAI_APIKEY=%s\n" % x.get('token'))
-f1.close()

@@ -41,9 +41,9 @@ fi
 
 SCRIPT=$(cat <<EOF
 #!/bin/bash
-if [ -d "/opt/weaviate/" ]; then
+if [ -d "/opt/mitta-services/weaviate/" ]; then
   echo "starting weaviate"
-  # sudo -i -u solr /opt/solr/bin/solr start -m 8192m
+
 else
   sudo su -
   date >> /opt/start.time
